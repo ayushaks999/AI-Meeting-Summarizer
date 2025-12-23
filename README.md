@@ -9,71 +9,94 @@
 
 ---
 
+## 📸 Demo / Screenshots
+
+> (Screenshots are stored in the `screenshot/` folder)
+
+### 📊 Meetings Dashboard
+
+![Meetings Dashboard](screenshot/Meetings.png)
+
+### 🎙️ Record a Meeting
+
+![Record Meeting](screenshot/Records.png)
+
+### ⚙️ Settings & Integrations
+
+![Settings](screenshot/Settings.png)
+
+---
+
 ## ✨ Features
 
 ### Core Capabilities
 
-* 🎙️ **Local Audio Capture** - Record meetings directly from your microphone
-* ⚡ **Real-Time Transcription** - See transcription appear every 10 seconds while recording
-* 🤖 **AI-Powered Summarization** - Get detailed, comprehensive meeting summaries
-* 📋 **Action Item Extraction** - Automatically identify tasks, assignments, and deadlines
-* 🎯 **Smart Task Lists** - Auto-generated task lists with priorities and assignees
-* 🔔 **Desktop Notifications** - Real-time notifications for all major events
+* 🎙️ **Local Audio Capture** — Record meetings directly from your microphone
+* ⚡ **Real-Time Transcription** — See transcription appear every 10 seconds while recording
+* 🤖 **AI-Powered Summarization** — Get detailed, comprehensive meeting summaries
+* 📋 **Action Item Extraction** — Automatically identify tasks, assignments, and deadlines
+* 🎯 **Smart Task Lists** — Auto-generated task lists with priorities and assignees
+* 🔔 **Desktop Notifications** — Real-time notifications for major events
 
 ### Integrations
 
-* 📅 **Google Calendar Sync** - Export action items as calendar events
-* 📝 **Notion Export** - Send meeting notes to Notion pages
-* 🎯 **Jira Task Sync** - Create Jira tasks from action items
-* 🌐 **Language Translation** - Translate meetings to 12+ languages
+* 📅 **Google Calendar Sync** — Export action items as calendar events
+* 📝 **Notion Export** — Send meeting notes to Notion pages
+* 🎯 **Jira Task Sync** — Create Jira tasks from action items
+* 🌐 **Language Translation** — Translate meetings to 12+ languages
 
 ### Additional Features
 
-* ✏️ **Meeting Title Editing** - Edit and customize meeting titles
-* 🎵 **Audio Playback** - Listen to recorded audio from meeting details
-* 🔍 **Advanced Search & Filters** - Find meetings by date, title, or action item status
-* 👥 **Participant Tracking** - Track meeting attendees
-* 💾 **Local Storage** - All data stored locally in SQLite database
+* ✏️ **Meeting Title Editing** — Edit and customize meeting titles
+* 🎵 **Audio Playback** — Listen to recorded audio from meeting details
+* 🔍 **Advanced Search & Filters** — Find meetings by date, title, or action item status
+* 👥 **Participant Tracking** — Track meeting attendees
+* 💾 **Local Storage** — All data stored locally in SQLite
 
 ---
 
-## 🎬 Demo
+## 🎬 Project Structure (high level)
 
 ```
-screenshots/
-├── main-view.png
-├── recording-view.png
-├── live-transcription.png
-└── meeting-details.png
+AI_Meeting_Summarizer/
+├── backend/                # Flask backend, transcription & AI orchestration
+├── electron/               # Electron app shell
+├── frontend/               # UI (HTML/CSS/JS)
+├── screenshot/             # Demo screenshots (already uploaded)
+├── data/                   # Local sqlite DB (ignored in git)
+├── README.md
+├── requirements.txt
+├── package.json
+└── .env.example
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Desktop Framework
+### Desktop
 
-* **Electron** - Cross-platform desktop application
+* **Electron** — Cross-platform desktop app
 
 ### Backend
 
-* **Python 3.8+** - Core backend runtime
-* **Flask** - Web framework
-* **Flask-SocketIO** - Real-time communication
-* **SQLAlchemy** - Database ORM
-* **SQLite** - Local database
+* **Python 3.8+**
+* **Flask**
+* **Flask-SocketIO**
+* **SQLAlchemy**
+* **SQLite**
 
 ### AI Services
 
-* **Deepgram API** - Speech-to-text transcription
-* **Euron.one API** - GPT-4.1 mini for summarization and action item extraction
-* **Deep Translator** - Multi-language translation
+* **Deepgram** — Speech-to-text
+* **Euron.one** — LLM for summarization/action items (configurable)
+* **deep-translator** — Optional translation service
 
 ### Frontend
 
-* **HTML/CSS/JavaScript** - UI implementation
-* **Axios** - HTTP client
-* **Socket.IO Client** - Real-time updates
+* **HTML/CSS/JS**
+* **Socket.IO Client**
+* **Axios**
 
 ---
 
@@ -81,39 +104,38 @@ screenshots/
 
 ### Prerequisites
 
-* **Python 3.8+**
-* **Node.js 18+**
-* **Git**
+* Python 3.8+
+* Node.js 18+
+* Git
 
-### Step 1: Clone Repository
+### Step 1 — Clone
 
 ```bash
 git clone https://github.com/ayushaks999/AI_Meeting_Summarizer.git
 cd AI_Meeting_Summarizer
 ```
 
-### Step 2: Install Python Dependencies
+### Step 2 — Python environment
 
 ```bash
 python -m venv venv
-
 # Windows
 venv\Scripts\activate
-# macOS/Linux
+# macOS / Linux
 source venv/bin/activate
 
 pip install -r requirements.txt
 ```
 
-### Step 3: Install Node Dependencies
+### Step 3 — Node packages
 
 ```bash
 npm install
 ```
 
-### Step 4: Configure Environment Variables
+### Step 4 — Environment variables
 
-Create a `.env` file in the root directory:
+Copy `.env.example` to `.env` and fill in keys:
 
 ```env
 TRANSCRIPTION_MODEL=deepgram
@@ -128,36 +150,78 @@ DEBUG=False
 DATABASE_PATH=data/meetings.db
 ```
 
+> See `API_KEYS_GUIDE.md` for provider-specific setup steps and scopes.
+
 ---
 
-## 🚀 Usage
+## 🚀 Running the app (development)
 
-### Start the Application
+1. Start backend (API + socket server)
 
 ```bash
-npm start
+# from repo root
+python backend/app.py
 ```
 
-This command will:
-
-1. Start the Python backend on `http://127.0.0.1:5000`
-2. Launch the Electron desktop app
-
----
-
-## 🧪 Development
+2. Start Electron frontend (in a separate terminal)
 
 ```bash
-# Backend
-python backend/app.py
-
-# Frontend (separate terminal)
 npm run start:electron
 ```
 
+> `npm start` is configured to start both backend and launch Electron in production-style mode.
+
 ---
 
-## 📝 Features Roadmap
+## 🧪 Quick Start (test recording)
+
+1. Open the app and go to **Settings** → configure Deepgram & Euron keys.
+2. Go to **Record** → enter a meeting title and participants.
+3. Click **Start Recording** — speak into your microphone.
+4. Click **Stop Recording** — the app will send audio for transcription and summarize the meeting.
+5. Visit **Meetings** to view summaries and extracted action items.
+
+---
+
+## 🧩 Configuration & Integrations
+
+### Google Calendar
+
+Follow the steps in `INTEGRATION_SETUP.md` to create OAuth credentials and link the app to a Google account.
+
+### Notion
+
+Provide a Notion integration token in Settings and a target page/database ID.
+
+### Jira
+
+Add base URL and API token in Settings. The app will use the Jira API to create issues from action items.
+
+---
+
+## 🧰 Development Tips
+
+* Keep secrets out of source control — use `.env` and add `data/` and `.env` to `.gitignore`.
+* To test transcription locally without hitting the API, set a `MOCK_TRANSCRIPTION=true` flag in `.env`.
+* Use browser devtools to inspect socket.io messages (Electron → View → Toggle DevTools).
+
+---
+
+## ✅ Contributing
+
+Contributions welcome! Please:
+
+1. Fork this repo
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+Please follow the code style used in the repo and include tests where applicable.
+
+---
+
+## 📝 Roadmap
 
 * [ ] Speaker diarization
 * [ ] Meeting templates
@@ -167,36 +231,18 @@ npm run start:electron
 
 ---
 
-## 🤝 Contributing
+## ⚖️ License
 
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+This project is licensed under the MIT License. See `LICENSE` for details.
 
 ---
 
-## 📄 License
+## 📧 Contact
 
-This project is licensed under the MIT License.
+Made with ❤️ by **Ayush Kumar Shaw** — feel free to open issues or PRs.
 
----
-
-## 📧 Support
-
-For issues or suggestions:
-
-* Open an issue on GitHub: [https://github.com/ayushaks999/AI_Meeting_Summarizer/issues](https://github.com/ayushaks999/AI_Meeting_Summarizer/issues)
+GitHub: [https://github.com/ayushaks999](https://github.com/ayushaks999)
 
 ---
 
-## 🌟 Show Your Support
-
-If this project helped you, please give it a ⭐!
-
----
-
-**Made with ❤️ by Ayush Kumar Shaw**
+*If you want a variant of this README optimized for recruiters (short intro + screenshots first) or a one-page `README-lite` for demo purposes, tell me and I’ll create it.*
